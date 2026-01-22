@@ -115,6 +115,7 @@ pipeline {
                    - passwordVariable = le mot de passe / token Docker Hub
                 */
                 script {
+                                    
                     withCredentials([usernamePassword(
                         credentialsId: 'dockerhub-cred',
                         usernameVariable: 'DOCKERHUB_USER',
@@ -122,9 +123,9 @@ pipeline {
                     )]) {
 
                         // login Docker Hub
-                        bat """
-                            echo "${DOCKERHUB_PASS}" | docker login -u "${DOCKERHUB_USER}" --password-stdin
-                        """
+                        bat '''
+                            echo %DOCKERHUB_PASS% | docker login -u %DOCKERHUB_USER% --password-stdin
+                        '''
 
                         // retag l'image locale avec ton namespace Docker Hub
                         bat """

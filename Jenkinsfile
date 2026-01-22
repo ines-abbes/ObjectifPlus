@@ -133,7 +133,7 @@ pipeline {
 
     post {
         success {
-            echo "Pipeline terminé ya Iness ya janjounaaaaa!!!!"
+            echo "Bravo ya Iness ya janjounaaaaa!!!!"
         }
     }
 }

@@ -38,7 +38,7 @@ pipeline {
 
                 /* On construit l'image Docker en tag 'latest'
                    Le Dockerfile doit être à la racine du repo */
-                sh """
+                bat """
                     docker build -t ${backendimage}:latest ${backendF}
                 """
             }
@@ -61,18 +61,18 @@ pipeline {
                     )]) {
 
                         // login Docker Hub
-                        sh """
+                        bat """
                             echo "${DOCKERHUB_PASS}" | docker login -u "${DOCKERHUB_USER}" --password-stdin
                         """
 
                         // retag l'image locale avec ton namespace Docker Hub
-                        sh """
+                        bat """
                             docker tag ${backendimage}:latest ${DOCKERHUB_USER}/${backendimage}:latest
                             docker push ${DOCKERHUB_USER}/${backendimage}:latest
                         """
 
                         // logout 
-                        sh "docker logout"
+                        bat "docker logout"
                     }
                 }
             }
@@ -84,7 +84,7 @@ pipeline {
 
                 /* On construit l'image Docker en tag 'latest'
                    Le Dockerfile doit être à la racine du repo */
-                sh """
+                bat """
                     docker build -t ${frontendimage}:latest ${frontendF}
                 """
             }
@@ -107,18 +107,18 @@ pipeline {
                     )]) {
 
                         // login Docker Hub
-                        sh """
+                        bat """
                             echo "${DOCKERHUB_PASS}" | docker login -u "${DOCKERHUB_USER}" --password-stdin
                         """
 
                         // retag l'image locale avec ton namespace Docker Hub
-                        sh """
+                        bat """
                             docker tag ${frontendimage}:latest ${DOCKERHUB_USER}/${frontendimage}:latest
                             docker push ${DOCKERHUB_USER}/${frontendimage}:latest
                         """
 
                         // logout 
-                        sh "docker logout"
+                        bat "docker logout"
                     }
                 }
             }
@@ -130,7 +130,7 @@ pipeline {
 
                 /* On construit l'image Docker en tag 'latest'
                    Le Dockerfile doit être à la racine du repo */
-                sh """
+                bat """
                     docker compose up -d
                 """
             }

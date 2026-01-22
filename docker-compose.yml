@@ -44,7 +44,7 @@ services:
       - db
 
   frontend:
-    build: ./frontend:V6
+    build: ./frontend
     container_name: frontend
     ports:
       - "85:80"

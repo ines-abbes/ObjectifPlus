@@ -27,7 +27,7 @@ pipeline {
 
                 /* Clone le repo avec tes identifiants Jenkins ''
                    - branch: mets 'main' ou 'master' selon ta branche */
-                git branch: 'master',
+                    git branch: 'master',
                     credentialsId: 'github-cred',
                     url: "${GIT_REPO}"
                 }

@@ -49,12 +49,7 @@ pipeline {
             steps {
                 echo "==> Push de l'image sur Docker Hub (tag: latest)"
 
-                /* On utilise les identifiants Jenkins ''
-                   ATTENTION :
-                   - usernameVariable = ton username Docker Hub
-                   - passwordVariable = le mot de passe / token Docker Hub
-                */
-                script {
+                 script {
                     withCredentials([usernamePassword(
                     credentialsId: 'dockerhub-cred',
                     usernameVariable: 'DOCKERHUB_USER',
@@ -63,17 +58,7 @@ pipeline {
                         bat '''
                             echo %DOCKERHUB_PASS% | docker login -u %DOCKERHUB_USER% --password-stdin
                         '''
-                    /*withCredentials([usernamePassword(
-                        credentialsId: 'dockerhub-cred',
-                        usernameVariable: 'DOCKERHUB_USER',
-                        passwordVariable: 'DOCKERHUB_PASS'
-                    )]) {
-
-                        // login Docker Hub
-                        bat """
-                            echo "${DOCKERHUB_PASS}" | docker login -u "${DOCKERHUB_USER}" --password-stdin
-                        """
-*/
+                    
                         // retag l'image locale avec ton namespace Docker Hub
                         bat '''
                             docker tag %backendimage%:latest %DOCKERHUB_USER%/%backendimage%:latest
@@ -81,11 +66,6 @@ pipeline {
                         '''
 
                       
-                        /*bat """
-                            docker tag ${backendimage}:latest ${DOCKERHUB_USER}/${backendimage}:latest
-                            docker push ${DOCKERHUB_USER}/${backendimage}:latest
-                        """
-*/
                         // logout 
                         bat "docker logout"
                     }
@@ -109,12 +89,7 @@ pipeline {
             steps {
                 echo "==> Push de l'image sur Docker Hub (tag: latest)"
 
-                /* On utilise les identifiants Jenkins ''
-                   ATTENTION :
-                   - usernameVariable = ton username Docker Hub
-                   - passwordVariable = le mot de passe / token Docker Hub
-                */
-                script {
+                 script {
                                     
                     withCredentials([usernamePassword(
                         credentialsId: 'dockerhub-cred',

@@ -7,8 +7,8 @@ pipeline {
     /* Variables globales */
     environment {
         // Nom local de l'image 
-        backendimage = "objectif_backend_img"
-        frontendimage = "objectif_frontend_img"
+        backendimage = "backend"
+        frontendimage = "frontend"
         
         // Repo folders
         

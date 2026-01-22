@@ -76,7 +76,7 @@ pipeline {
 */
                         // retag l'image locale avec ton namespace Docker Hub
                         bat '''
-                            docker tag %BACKEND_IMAGE%:latest %DOCKERHUB_USER%/%backendimage%:latest
+                            docker tag %backendimage%:latest %DOCKERHUB_USER%/%backendimage%:latest
                             docker push %DOCKERHUB_USER%/%backendimage%:latest
                         '''
 

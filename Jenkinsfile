@@ -36,6 +36,7 @@ pipeline {
                 git branch: 'master',
                     credentialsId: 'github-cred',
                     url: "${GIT_REPO}"
+                    gitTool: 'DefaultGit'
             }
         }
 

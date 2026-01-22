@@ -12,8 +12,8 @@ pipeline {
         
         // Repo folders
         
-        backendF = "objectif_backend"
-        frontendF = "objectif_frontend"
+        backendF = "backend"
+        frontendF = "frontend"
 
         // URL du repo GitHub
         GIT_REPO = "https://github.com/ines-abbes/ObjectifPlus.git"

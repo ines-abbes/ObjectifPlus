@@ -23,13 +23,6 @@ pipeline {
 
     stages {
 
-        stage('Check Git from Jenkins') {
-            steps {
-                sh 'which git'
-                sh 'git --version'
-            }
-        }
-
         stage('Checkout') {
             steps {
                 echo "==> Récupération du code source depuis GitHub"

@@ -67,9 +67,9 @@ pipeline {
  {
 
                         // login Docker Hub
-                        bat """
-                            echo "${DOCKERHUB_PASS}" | docker login -u "${DOCKERHUB_USER}" --password-stdin
-                        """
+                        //bat """
+                        //    echo "${DOCKERHUB_PASS}" | docker login -u "${DOCKERHUB_USER}" --password-stdin
+                        //"""
 
                         // retag l'image locale avec ton namespace Docker Hub
                         bat """

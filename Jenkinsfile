@@ -76,8 +76,8 @@ pipeline {
 */
                         // retag l'image locale avec ton namespace Docker Hub
                         bat '''
-                            docker tag %BACKEND_IMAGE%:latest %DOCKERHUB_USER%/%BACKEND_IMAGE%:latest
-                            docker push %DOCKERHUB_USER%/%BACKEND_IMAGE%:latest
+                            docker tag %BACKEND_IMAGE%:latest %DOCKERHUB_USER%/%backendimage%:latest
+                            docker push %DOCKERHUB_USER%/%backendimage%:latest
                         '''
 
                       
@@ -105,7 +105,7 @@ pipeline {
             }
         }
 
-        stage('Pubat Docker Image emp -- frontend') {
+        stage('Push Docker Image emp -- frontend') {
             steps {
                 echo "==> Push de l'image sur Docker Hub (tag: latest)"
 
@@ -128,8 +128,8 @@ pipeline {
 
                         // retag l'image locale avec ton namespace Docker Hub
                         bat """
-                            docker tag %BACKEND_IMAGE%:latest %DOCKERHUB_USER%/%BACKEND_IMAGE%:latest
-                            docker push %DOCKERHUB_USER%/%BACKEND_IMAGE%:latestfrontendimage}:latest
+                            docker tag %frontendimage%:latest %DOCKERHUB_USER%/%frontendimage%:latest
+                            docker push %DOCKERHUB_USER%/%frontendimage%:latest
                            
                         """
 

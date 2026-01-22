@@ -35,9 +35,8 @@ pipeline {
                    - branch: mets 'main' ou 'master' selon ta branche */
                 git branch: 'master',
                     credentialsId: 'github-cred',
-                    url: "${GIT_REPO}",
-                    gitTool: 'DefaultGit'
-            }
+                    url: "${GIT_REPO}"
+                }
         }
 
         stage('Build Docker Image objectifplus -- backend') {

@@ -128,8 +128,9 @@ pipeline {
 
                         // retag l'image locale avec ton namespace Docker Hub
                         bat """
-                            docker tag ${frontendimage}:latest ${DOCKERHUB_USER}/${frontendimage}:latest
-                            docker push ${DOCKERHUB_USER}/${frontendimage}:latest
+                            docker tag %BACKEND_IMAGE%:latest %DOCKERHUB_USER%/%BACKEND_IMAGE%:latest
+                            docker push %DOCKERHUB_USER%/%BACKEND_IMAGE%:latestfrontendimage}:latest
+                           
                         """
 
                         // logout 

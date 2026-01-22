@@ -2,9 +2,7 @@ pipeline {
     /* On dit à Jenkins d'exécuter le pipeline sur n'importe quel agent.
        ⚠ Cet agent doit avoir Docker installé et le droit d'exécuter "docker build / docker push". */
     agent any
-      tools {
-        git 'Git-WSL'  // Nom de l'installation configurée
-    }
+      
 
     /* Variables globales */
     environment {

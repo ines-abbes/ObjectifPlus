@@ -67,15 +67,12 @@ pipeline {
  {
 
                         // login Docker Hub
-                        //bat """
-                        //    echo "${DOCKERHUB_PASS}" | docker login -u "${DOCKERHUB_USER}" --password-stdin
-                        //"""
+                        bat """
+                            echo "${DOCKERHUB_PASS}" | docker login -u "${DOCKERHUB_USER}" --password-stdin
+                        """
 
                         // retag l'image locale avec ton namespace Docker Hub
-                        bat """
-                            docker tag ${backendimage}:latest ${DOCKERHUB_USER}/${backendimage}:latest
-                            docker push ${DOCKERHUB_USER}/${backendimage}:latest
-                        """
+                        
 
                         // logout 
                         bat "docker logout"

@@ -63,7 +63,6 @@ pipeline {
                         bat '''
                             echo %DOCKERHUB_PASS% | docker login -u %DOCKERHUB_USER% --password-stdin
                         '''
-                    }
                     /*withCredentials([usernamePassword(
                         credentialsId: 'dockerhub-cred',
                         usernameVariable: 'DOCKERHUB_USER',

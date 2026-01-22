@@ -56,11 +56,10 @@ pipeline {
                 */
                 script {
                     withCredentials([usernamePassword(
-                    credentialsId: 'dockerhub-cred',
-                    usernameVariable: 'DOCKERHUB_USER',
-                    passwordVariable: 'DOCKERHUB_PASS'
-                )]) {
-                    {
+                        credentialsId: 'dockerhub-cred',
+                        usernameVariable: 'DOCKERHUB_USER',
+                        passwordVariable: 'DOCKERHUB_PASS'
+                    )]) {
 
                         // login Docker Hub
                         bat """
@@ -68,7 +67,10 @@ pipeline {
                         """
 
                         // retag l'image locale avec ton namespace Docker Hub
-                        
+                        bat """
+                            docker tag ${backendimage}:latest ${DOCKERHUB_USER}/${backendimage}:latest
+                            docker push ${DOCKERHUB_USER}/${backendimage}:latest
+                        """
 
                         // logout 
                         bat "docker logout"

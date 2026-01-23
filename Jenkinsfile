@@ -37,14 +37,15 @@ pipeline {
         stage('SonarQube Backend') {
             steps {
                 dir('backend') {
-                    bat """
-                    docker run --rm ^
-                      -e SONAR_HOST_URL=http://host.docker.internal:9000 ^
-                      -e SONAR_LOGIN=%SONAR_TOKEN% ^
-                      -v %cd%:/usr/src ^
-                      sonarsource/sonar-scanner-cli
-                    """
+                    
+                    // docker run --rm ^
+                    //   -e SONAR_HOST_URL=http://host.docker.internal:9000 ^
+                    //   -e SONAR_LOGIN=%SONAR_TOKEN% ^
+                    //   -v %cd%:/usr/src ^
+                    //   sonarsource/sonar-scanner-cli
+                bat """ 
                 sonar-scanner.bat -D"sonar.projectKey=objplus-backend" -D"sonar.sources=." -D"sonar.host.url=http://localhost:9000" -D"sonar.login=271efa2a1a01bd56d6c4263f70581253b58a65c2"
+                """
                 }
             }
         }

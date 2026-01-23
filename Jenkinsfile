@@ -9,6 +9,7 @@ pipeline {
         // Nom local de l'image 
         backendimage = "backend"
         frontendimage = "frontend"
+        SONAR_TOKEN = credentials('sonar-token')
         
         // Repo folders
         
@@ -33,6 +34,19 @@ pipeline {
                 }
         }
 
+        stage('SonarQube Backend') {
+            steps {
+                dir('backend') {
+                    bat """
+                    docker run --rm ^
+                      -e SONAR_HOST_URL=http://host.docker.internal:9000 ^
+                      -e SONAR_LOGIN=%SONAR_TOKEN% ^
+                      -v %cd%:/usr/src ^
+                      sonarsource/sonar-scanner-cli
+                    """
+                }
+            }
+        }
         stage('Build Docker Image objectifplus -- backend') {
             steps {
                 echo "==> Build de l'image Docker locale"

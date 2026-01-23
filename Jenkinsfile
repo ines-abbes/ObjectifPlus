@@ -120,12 +120,7 @@ pipeline {
         stage('execute docker compose') {
             steps {
                 echo "==> Exécuter Docker compose"
-                withCredentials([usernamePassword(
-                        credentialsId: 'dockerhub-cred',
-                        usernameVariable: 'DOCKERHUB_USER',
-                        passwordVariable: 'DOCKERHUB_PASS'
-                    )]) 
-
+                
                 /* On construit l'image Docker en tag 'latest'
                    Le Dockerfile doit être à la racine du repo */
                 bat """

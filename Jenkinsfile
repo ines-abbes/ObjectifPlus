@@ -34,6 +34,15 @@ pipeline {
                 }
         }
 
+        stage('Debug PATH') {
+            steps {
+                bat """
+                    echo PATH=%PATH%
+                     where sonar-scanner
+                """
+    }
+}
+
         stage('SonarQube Backend') {
             steps {
                 dir('backend') {

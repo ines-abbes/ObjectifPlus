@@ -147,9 +147,9 @@ pipeline {
 
     // }
 
-    post {
-        success {
-            echo "Bravo ya Iness ya janjounaaaaa!!!!"
-        }
-    }
+    // post {
+    //     success {
+    //         echo "Bravo ya Iness ya janjounaaaaa!!!!"
+    //     }
+    // }
 }}

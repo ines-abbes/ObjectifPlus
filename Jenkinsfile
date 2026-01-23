@@ -9,7 +9,7 @@ pipeline {
         // Nom local de l'image 
         backendimage = "backend"
         frontendimage = "frontend"
-        //SONAR_TOKEN = credentials('sonar-token')
+        
         
         // Repo folders
         
@@ -34,122 +34,107 @@ pipeline {
                 }
         }
 
-        stage('SonarQube Backend') {
+          stage('Build Docker Image objectifplus -- backend') {
             steps {
-                dir('backend') {
-                    
-                    // docker run --rm ^
-                    //   -e SONAR_HOST_URL=http://host.docker.internal:9000 ^
-                    //   -e SONAR_LOGIN=%SONAR_TOKEN% ^
-                    //   -v %cd%:/usr/src ^
-                    //   sonarsource/sonar-scanner-cli
-                bat """ 
-                sonar-scanner.bat -D"sonar.projectKey=objplus-backend" -D"sonar.sources=." -D"sonar.host.url=http://localhost:9000" -D"sonar.login=271efa2a1a01bd56d6c4263f70581253b58a65c2"
+                echo "==> Build de l'image Docker locale"
+
+                /* On construit l'image Docker en tag 'latest'
+                   Le Dockerfile doit être à la racine du repo */
+                bat """
+                    docker build -t ${backendimage}:latest ${backendF}
                 """
+            }
+        }
+
+        stage('Push Docker Image objectifplus -- backend') {
+            steps {
+                echo "==> Push de l'image sur Docker Hub (tag: latest)"
+
+                 script {
+                    withCredentials([usernamePassword(
+                    credentialsId: 'dockerhub-cred',
+                    usernameVariable: 'DOCKERHUB_USER',
+                    passwordVariable: 'DOCKERHUB_PASS'
+                )]) {
+                        bat '''
+                            echo %DOCKERHUB_PASS% | docker login -u %DOCKERHUB_USER% --password-stdin
+                        '''
+                    
+                        // retag l'image locale avec ton namespace Docker Hub
+                        bat '''
+                            docker tag %backendimage%:latest %DOCKERHUB_USER%/%backendimage%:latest
+                            docker push %DOCKERHUB_USER%/%backendimage%:latest
+                        '''
+
+                      
+                        // logout 
+                        bat "docker logout"
+                    }
                 }
             }
         }
-    //     stage('Build Docker Image objectifplus -- backend') {
-    //         steps {
-    //             echo "==> Build de l'image Docker locale"
 
-    //             /* On construit l'image Docker en tag 'latest'
-    //                Le Dockerfile doit être à la racine du repo */
-    //             bat """
-    //                 docker build -t ${backendimage}:latest ${backendF}
-    //             """
-    //         }
-    //     }
+        stage('Build Docker Image objectifplus -- frontend') {
+            steps {
+                echo "==> Build de l'image Docker locale"
 
-    //     stage('Push Docker Image objectifplus -- backend') {
-    //         steps {
-    //             echo "==> Push de l'image sur Docker Hub (tag: latest)"
+                /* On construit l'image Docker en tag 'latest'
+                   Le Dockerfile doit être à la racine du repo */
+                bat """
+                    docker build -t ${frontendimage}:latest ${frontendF}
+                """
+            }
+        }
 
-    //              script {
-    //                 withCredentials([usernamePassword(
-    //                 credentialsId: 'dockerhub-cred',
-    //                 usernameVariable: 'DOCKERHUB_USER',
-    //                 passwordVariable: 'DOCKERHUB_PASS'
-    //             )]) {
-    //                     bat '''
-    //                         echo %DOCKERHUB_PASS% | docker login -u %DOCKERHUB_USER% --password-stdin
-    //                     '''
-                    
-    //                     // retag l'image locale avec ton namespace Docker Hub
-    //                     bat '''
-    //                         docker tag %backendimage%:latest %DOCKERHUB_USER%/%backendimage%:latest
-    //                         docker push %DOCKERHUB_USER%/%backendimage%:latest
-    //                     '''
+        stage('Push Docker Image emp -- frontend') {
+            steps {
+                echo "==> Push de l'image sur Docker Hub (tag: latest)"
 
-                      
-    //                     // logout 
-    //                     bat "docker logout"
-    //                 }
-    //             }
-    //         }
-    //     }
-
-    //     stage('Build Docker Image objectifplus -- frontend') {
-    //         steps {
-    //             echo "==> Build de l'image Docker locale"
-
-    //             /* On construit l'image Docker en tag 'latest'
-    //                Le Dockerfile doit être à la racine du repo */
-    //             bat """
-    //                 docker build -t ${frontendimage}:latest ${frontendF}
-    //             """
-    //         }
-    //     }
-
-    //     stage('Push Docker Image emp -- frontend') {
-    //         steps {
-    //             echo "==> Push de l'image sur Docker Hub (tag: latest)"
-
-    //              script {
+                 script {
                                     
-    //                 withCredentials([usernamePassword(
-    //                     credentialsId: 'dockerhub-cred',
-    //                     usernameVariable: 'DOCKERHUB_USER',
-    //                     passwordVariable: 'DOCKERHUB_PASS'
-    //                 )]) {
+                    withCredentials([usernamePassword(
+                        credentialsId: 'dockerhub-cred',
+                        usernameVariable: 'DOCKERHUB_USER',
+                        passwordVariable: 'DOCKERHUB_PASS'
+                    )]) 
 
-    //                     // login Docker Hub
-    //                     bat '''
-    //                         echo %DOCKERHUB_PASS% | docker login -u %DOCKERHUB_USER% --password-stdin
-    //                     '''
+                        // login Docker Hub
+                        bat '''
+                            echo %DOCKERHUB_PASS% | docker login -u %DOCKERHUB_USER% --password-stdin
+                        '''
 
-    //                     // retag l'image locale avec ton namespace Docker Hub
-    //                     bat """
-    //                         docker tag %frontendimage%:latest %DOCKERHUB_USER%/%frontendimage%:latest
-    //                         docker push %DOCKERHUB_USER%/%frontendimage%:latest
+                        // retag l'image locale avec ton namespace Docker Hub
+                        bat """
+                            docker tag %frontendimage%:latest %DOCKERHUB_USER%/%frontendimage%:latest
+                            docker push %DOCKERHUB_USER%/%frontendimage%:latest
                            
-    //                     """
+                        """
 
-    //                     // logout 
-    //                     bat "docker logout"
-    //                 }
-    //             }
-    //         }
-    //     }
+                        // logout 
+                        bat "docker logout"
+                    }
+                }
+            }
         
-    //     stage('execute docker compose') {
-    //         steps {
-    //             echo "==> Exécuter Docker compose"
+        
+        stage('execute docker compose') {
+            steps {
+                echo "==> Exécuter Docker compose"
 
-    //             /* On construit l'image Docker en tag 'latest'
-    //                Le Dockerfile doit être à la racine du repo */
-    //             bat """
-    //                 docker compose up -d
-    //             """
-    //         }
-    //     }
+                /* On construit l'image Docker en tag 'latest'
+                   Le Dockerfile doit être à la racine du repo */
+                bat """
+                    docker compose up -d
+                """
+            }
+        }
 
 
-    // }
+    }
 
-    // post {
-    //     success {
-    //         echo "Bravo ya Iness ya janjounaaaaa!!!!"
-    //     }
-    // }
-}}
+    post {
+        success {
+            echo "Bravo ya Iness ya janjounaaaaa!!!!"
+        }
+    }
+}

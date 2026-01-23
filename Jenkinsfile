@@ -68,7 +68,7 @@ pipeline {
 
                       
                         // logout 
-                        //bat "docker logout"
+                        bat "docker logout"
                     }
                 }
             }
@@ -111,7 +111,7 @@ pipeline {
                         """
 
                         // logout 
-                        //bat "docker logout"
+                        bat "docker logout"
                     }
                 }
             }

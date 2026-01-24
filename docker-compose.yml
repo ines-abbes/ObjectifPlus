@@ -30,7 +30,7 @@ services:
 
   backend:
     build: ./backend
-    container_name: backend
+    container_name: backend-cont
     ports:
       - "5000:5000"
     environment:
@@ -45,7 +45,7 @@ services:
 
   frontend:
     build: ./frontend
-    container_name: frontend
+    container_name: frontend-cont
     ports:
       - "85:80"
     depends_on:

@@ -96,7 +96,7 @@ pipeline {
                         credentialsId: 'dockerhub-cred',
                         usernameVariable: 'DOCKERHUB_USER',
                         passwordVariable: 'DOCKERHUB_PASS'
-                    )]) 
+                    )]) {
 
                         // login Docker Hub
                         bat '''
@@ -115,8 +115,7 @@ pipeline {
                     }
                 }
             }
-        
-        
+        }
         stage('execute docker compose') {
             steps {
                 echo "==> Exécuter Docker compose"

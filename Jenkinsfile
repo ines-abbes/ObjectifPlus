@@ -92,11 +92,11 @@ pipeline {
 
                  script {
                                     
-                    withCredentials([usernamePassword(
-                        credentialsId: 'dockerhub-cred',
-                        usernameVariable: 'DOCKERHUB_USER',
-                        passwordVariable: 'DOCKERHUB_PASS'
-                    )]) 
+                    // withCredentials([usernamePassword(
+                    //     credentialsId: 'dockerhub-cred',
+                    //     usernameVariable: 'DOCKERHUB_USER',
+                    //     passwordVariable: 'DOCKERHUB_PASS'
+                    // )]) 
 
                         // login Docker Hub
                         bat '''
